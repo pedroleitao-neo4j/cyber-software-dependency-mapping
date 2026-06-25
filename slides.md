@@ -33,27 +33,23 @@ style: |
 
 ---
 
-# The Problem: Hidden Transitive Risks
-### Modern software relies on complex chains of open-source packages.
-- **Flat SBOM Blindspot:** Traditional security scanners generate flat lists of software components but fail to capture how they relate to one another.
-- **Hidden Vulnerabilities:** A security flaw buried three or four levels deep in a transitive dependency remains invisible to simple scans.
-- **Untargeted Remediation:** Without mapping relationships, developers waste effort patching packages that pose no active threat.
+# The Industry Problem: Software Supply Chain Risks
+### Modern enterprise applications are assembled from hundreds of open-source packages, introducing systemic vulnerabilities.
+Compliance mandates like the US Cyber Executive Order 14028 and the EU Cyber Resilience Act force businesses to track software inventories, yet static and flat SBOMs fail to reveal deep dependency relationships.
+
+High-profile exploits like Log4j demonstrate that security flaws buried deep in transitive dependencies remain invisible to traditional scanning tools.
+
+Organizations face alert fatigue and waste millions in developer productivity trying to patch unreachable vulnerabilities, lacking the relationship intelligence needed for impact analysis.
 
 ---
 
-# What is Software Dependency Mapping?
-### It transforms flat software inventory into relationship-aware graph intelligence.
-- **Dependency Tracking:** Tracks version requirements and actual resolved versions across package ecosystems.
-- **Vulnerability Linkage:** Automatically maps known security advisories to the specific package versions they affect.
-- **Graph-Powered Security:** Enables immediate assessment of downstream impact, version conflicts, architectural loops, and typosquatting.
+# The Business Solution: Graph-Based Dependency Mapping
+### Transforming flat software inventories into actionable security and compliance intelligence.
+By modeling package ecosystems as a property graph in Neo4j, organizations can map version requirements, vulnerability disclosures, and licensing metadata into a single source of truth.
 
----
+Security teams can immediately prioritize remediation by tracing exploitation probability and identifying whether a vulnerability is actually reachable in their runtime environment.
 
-# Core Architecture
-### The ingestion and analysis workflow
-- **Data Ingestion:** A Python script in the loader notebook fetches dependency networks recursively from the deps.dev API and imports them into Neo4j.
-- **Graph Queries:** The analysis notebook runs Cypher queries to evaluate security debt, identify load-bearing packages, and optimize remediation.
-- **Visualization:** Utilizes Playwright and the neo4j-viz library to export high-definition renderings of the dependency structures.
+This graph-powered approach enables proactive risk management, helping organizations avoid operational disruption and verify the health and compliance of their supply chain.
 
 ---
 
@@ -78,61 +74,75 @@ style: |
 
 # The Resulting Schema
 ### Connecting packages, versions, and security vulnerabilities
+
+![bg right:55% contain](renderings/schema.png)
+
 - The graph model features packages that depend on other packages and point to their respective vulnerabilities.
-- ![schema](renderings/schema.png)
 
 ---
 
 # Use Case 1: Transitive Blast Radius
 ### Identify the full downstream impact of a compromised package.
+
+![bg right:55% contain](renderings/uc1_blast_radius.png)
 - **The Query:** Traverses dependencies in reverse to find all packages that depend on a target library either directly or transitively.
 - **The Insight:** Surfacing the full blast radius reveals the true extent of exposure across the dependency graph.
-- ![Blast Radius](renderings/uc1_blast_radius.png)
 
 ---
 
 # Use Case 2: Transitive Security Risk Scoring
 ### Calculate the aggregate security debt of a package.
+
+![bg right:55% contain](renderings/transitive_risk.png)
+
 - **The Query:** Walks the transitive dependency tree for candidate libraries and accumulates the CVSS scores of all reachable vulnerabilities.
 - **The Insight:** Highlights how a library with no direct vulnerabilities can still introduce significant security risks transitively.
-- ![Transitive Risk](renderings/transitive_risk.png)
 
 ---
 
 # Use Case 3: Supply Chain Centrality
 ### Identify load-bearing dependencies in the ecosystem.
+
+![bg right:55% contain](renderings/uc3_centrality.png)
+
 - **The Query:** Ranks packages by their dependent count to locate single points of failure in the software chain.
 - **The Insight:** Points out the critical libraries that warrant the most rigorous security audits and code reviews.
-- ![Centrality](renderings/uc3_centrality_hub.png)
 
 ---
 
 # Use Case 4: Dependency Version Conflict Detection
 ### Resolve conflicting package requirements across the build environment.
+
+![bg right:55% contain](renderings/uc4_version_conflict.png)
+
 - **The Query:** Scans for packages that are requested under multiple different versions or requirement strings.
 - **The Insight:** Helps developers identify and fix version mismatches that cause build failures or runtime bugs.
-- ![Version Conflict](renderings/uc4_version_conflict.png)
 
 ---
 
 # Use Case 5: Shortest Path to Remediation
 ### Find the most efficient upgrade path to patch critical vulnerabilities.
+
+![bg right:55% contain](renderings/uc5_remediation_paths.png)
 - **The Query:** Identifies the shortest dependency path from a root application to packages hosting critical vulnerabilities.
 - **The Insight:** Tells developers exactly which direct dependency to bump to eliminate the maximum amount of security risk.
-- ![Remediation Paths](renderings/uc5_remediation_paths.png)
 
 ---
 
 # Use Case 6: Circular Dependency Detection
 ### Detect architectural smells that cause brittle builds and cyclic imports.
+
+![bg right:55% contain](renderings/uc6_circular_deps.png)
+
 - **The Query:** Searches for dependency cycles where a package transitively depends on itself.
 - **The Insight:** Flags architectural patterns that lead to circular dependencies and compilation issues.
-- ![Circular Dependencies](renderings/uc6_circular_deps.png)
 
 ---
 
 # Use Case 7: Typosquat Detection
 ### Identify suspicious name-alikes using string distance metrics.
+
+![bg right:55% contain](renderings/uc7_typosquat.png)
+
 - **The Query:** Leverages APOC text functions to find packages with names close to popular libraries but with low dependent counts.
 - **The Insight:** Automatically flags typosquatting attempts and other potential software supply chain attacks.
-- ![Typosquat](renderings/uc7_typosquat.png)
