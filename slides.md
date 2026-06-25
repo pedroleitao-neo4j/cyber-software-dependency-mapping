@@ -34,22 +34,14 @@ style: |
 ---
 
 # The Industry Problem: Software Supply Chain Risks
-### Modern enterprise applications are assembled from hundreds of open-source packages, introducing systemic vulnerabilities.
-Compliance mandates like the US Cyber Executive Order 14028 and the EU Cyber Resilience Act force businesses to track software inventories, yet static and flat SBOMs fail to reveal deep dependency relationships.
-
-High-profile exploits like Log4j demonstrate that security flaws buried deep in transitive dependencies remain invisible to traditional scanning tools.
-
-Organizations face alert fatigue and waste millions in developer productivity trying to patch unreachable vulnerabilities, lacking the relationship intelligence needed for impact analysis.
+### Modern applications rely on hundreds of open-source packages, introducing systemic vulnerabilities.
+Compliance mandates force organizations to track inventories, but flat SBOMs fail to reveal deep dependency relationships. Log4j demonstrated that flaws buried in transitive dependencies remain invisible to traditional scanners. This lack of relationship intelligence leads to alert fatigue and wasted remediation effort.
 
 ---
 
 # The Business Solution: Graph-Based Dependency Mapping
 ### Transforming flat software inventories into actionable security and compliance intelligence.
-By modeling package ecosystems as a property graph in Neo4j, organizations can map version requirements, vulnerability disclosures, and licensing metadata into a single source of truth.
-
-Security teams can immediately prioritize remediation by tracing exploitation probability and identifying whether a vulnerability is actually reachable in their runtime environment.
-
-This graph-powered approach enables proactive risk management, helping organizations avoid operational disruption and verify the health and compliance of their supply chain.
+Modeling package ecosystems as a property graph in Neo4j unites version requirements, vulnerabilities, and licensing metadata in a single source of truth. Security teams can prioritize remediation by verifying if a vulnerability is reachable in their runtime environment. This proactive risk management prevents operational disruption and secures the supply chain.
 
 ---
 
@@ -151,3 +143,8 @@ This graph-powered approach enables proactive risk management, helping organizat
 
 - **The Query:** Leverages APOC text functions to find packages with names close to popular libraries but with low dependent counts.
 - **The Insight:** Automatically flags typosquatting attempts and other potential software supply chain attacks.
+
+---
+
+# Questions?
+**GitHub:** [pedroleitao-neo4j/cyber-vpem](https://github.com/pedroleitao-neo4j/cyber-vpem)
