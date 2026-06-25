@@ -75,74 +75,79 @@ This graph-powered approach enables proactive risk management, helping organizat
 # The Resulting Schema
 ### Connecting packages, versions, and security vulnerabilities
 
-![bg right:55% contain](renderings/schema.png)
+![bg right:45% contain](renderings/schema.png)
 
 - The graph model features packages that depend on other packages and point to their respective vulnerabilities.
 
 ---
 
-# Use Case 1: Transitive Blast Radius
+# Use Cases
+### SBOM related use cases with this graph model
+
+---
+
+# Transitive Blast Radius
 ### Identify the full downstream impact of a compromised package.
 
-![bg right:55% contain](renderings/uc1_blast_radius.png)
+![bg right:45% contain](renderings/uc1_blast_radius.png)
 - **The Query:** Traverses dependencies in reverse to find all packages that depend on a target library either directly or transitively.
 - **The Insight:** Surfacing the full blast radius reveals the true extent of exposure across the dependency graph.
 
 ---
 
-# Use Case 2: Transitive Security Risk Scoring
+# Transitive Security Risk Scoring
 ### Calculate the aggregate security debt of a package.
 
-![bg right:55% contain](renderings/transitive_risk.png)
+![bg right:45% contain](renderings/transitive_risk.png)
 
 - **The Query:** Walks the transitive dependency tree for candidate libraries and accumulates the CVSS scores of all reachable vulnerabilities.
 - **The Insight:** Highlights how a library with no direct vulnerabilities can still introduce significant security risks transitively.
 
 ---
 
-# Use Case 3: Supply Chain Centrality
+# Supply Chain Centrality
 ### Identify load-bearing dependencies in the ecosystem.
 
-![bg right:55% contain](renderings/uc3_centrality.png)
+![bg right:45% contain](renderings/uc3_centrality.png)
 
 - **The Query:** Ranks packages by their dependent count to locate single points of failure in the software chain.
 - **The Insight:** Points out the critical libraries that warrant the most rigorous security audits and code reviews.
 
 ---
 
-# Use Case 4: Dependency Version Conflict Detection
+# Dependency Version Conflict Detection
 ### Resolve conflicting package requirements across the build environment.
 
-![bg right:55% contain](renderings/uc4_version_conflict.png)
+![bg right:45% contain](renderings/uc4_version_conflict.png)
 
 - **The Query:** Scans for packages that are requested under multiple different versions or requirement strings.
 - **The Insight:** Helps developers identify and fix version mismatches that cause build failures or runtime bugs.
 
 ---
 
-# Use Case 5: Shortest Path to Remediation
+# Shortest Path to Remediation
 ### Find the most efficient upgrade path to patch critical vulnerabilities.
 
-![bg right:55% contain](renderings/uc5_remediation_paths.png)
+![bg right:45% contain](renderings/uc5_remediation_paths.png)
 - **The Query:** Identifies the shortest dependency path from a root application to packages hosting critical vulnerabilities.
 - **The Insight:** Tells developers exactly which direct dependency to bump to eliminate the maximum amount of security risk.
 
 ---
 
-# Use Case 6: Circular Dependency Detection
+# Circular Dependency Detection
 ### Detect architectural smells that cause brittle builds and cyclic imports.
 
-![bg right:55% contain](renderings/uc6_circular_deps.png)
+![bg right:45% contain](renderings/uc6_circular_deps.png)
 
 - **The Query:** Searches for dependency cycles where a package transitively depends on itself.
 - **The Insight:** Flags architectural patterns that lead to circular dependencies and compilation issues.
 
 ---
 
-# Use Case 7: Typosquat Detection
+# Typosquat Detection
 ### Identify suspicious name-alikes using string distance metrics.
 
-![bg right:55% contain](renderings/uc7_typosquat.png)
+![bg right:45% contain](renderings/uc7_typosquat.png)
 
 - **The Query:** Leverages APOC text functions to find packages with names close to popular libraries but with low dependent counts.
 - **The Insight:** Automatically flags typosquatting attempts and other potential software supply chain attacks.
