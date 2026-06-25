@@ -108,7 +108,7 @@ This graph-powered approach enables proactive risk management, helping organizat
 # Supply Chain Centrality
 ### Identify load-bearing dependencies in the ecosystem.
 
-![bg right:45% contain](renderings/uc3_centrality.png)
+![bg right:45% contain](renderings/uc3_centrality_hub.png)
 
 - **The Query:** Ranks packages by their dependent count to locate single points of failure in the software chain.
 - **The Insight:** Points out the critical libraries that warrant the most rigorous security audits and code reviews.
